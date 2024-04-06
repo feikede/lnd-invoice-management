@@ -14,13 +14,11 @@ from typing import Callable, Any
 
 class LndListener:
     SOCKS5H_PROXY = os.environ.get("SOCKS5H_PROXY", "")
-    LND_RESTADDR = os.environ.get("LND_RESTADDR", "https://node5.fritz.box:8080")
+    LND_RESTADDR = os.environ.get("LND_RESTADDR", "https://your.lnd-server.org")
     INVOICE_MACAROON = os.environ.get("INVOICE_MACAROON", "xxxxxxxxx-xxxx-xxxx")
     DYNIP_SECRET = os.environ.get("DYNIP_SECRET", "")  # empty means function deactivated
     DYNIP_PORT = os.environ.get("DYNIP_PORT", "8080")
-    TLS_VERIFY = os.environ.get("TLS_VERIFY", False)
-
-    # TLS_VERIFY = os.environ.get("TLS_VERIFY", "./tls.cert")
+    TLS_VERIFY = os.environ.get("TLS_VERIFY", "./tls.cert")
 
     def __init__(self, mutex: threading.Lock, logger: logging.Logger, event_callback: Callable[[Any], None]):
         self._event_callback = event_callback

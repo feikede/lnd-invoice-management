@@ -1,0 +1,8 @@
+tls.cert
+example_response.json
+echo.py
+data.db
+.env
+/venv/
+/.idea/
+/__pycache__/

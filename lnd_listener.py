@@ -26,6 +26,8 @@ class LndListener:
         self._mutex = mutex
         self._listener = False
         self._is_healthy = False
+        if self.TLS_VERIFY.lower() == "false":
+            self.TLS_VERIFY = False
         if not self.TLS_VERIFY:
             urllib3.disable_warnings()
 

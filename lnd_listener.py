@@ -7,7 +7,6 @@ import threading
 import time
 import requests
 import urllib3
-from requests import Response
 from requests.exceptions import ChunkedEncodingError
 from typing import Callable, Any
 
@@ -18,7 +17,8 @@ class LndListener:
     INVOICE_MACAROON = os.environ.get("INVOICE_MACAROON", "xxxxxxxxx-xxxx-xxxx")
     TLS_VERIFY = os.environ.get("TLS_VERIFY", "./tls.cert")
 
-    def __init__(self, mutex: threading.Lock, logger: logging.Logger, event_callback: Callable[[Any], None]):
+    def __init__(self, mutex: threading.Lock, logger: logging.Logger,
+                 event_callback: Callable[[logging.Logger, Any], None]):
         self._event_callback = event_callback
         self._logger = logger
         self._mutex = mutex
@@ -33,7 +33,7 @@ class LndListener:
         if self._listener:
             self._logger.warning("LND invoice listener already started")
             return
-        self._logger.info("Starting LND invoice listener")
+        self._logger.info("Starting LND invoice listener thread")
         self._listener = threading.Thread(target=self._listen_for_invoices)
         self._listener.start()
 
@@ -42,7 +42,6 @@ class LndListener:
             self._is_healthy = ok
 
     def get_healthy(self) -> bool:
-        ok: bool = False
         with self._mutex:
             ok = self._is_healthy
         return ok
@@ -94,7 +93,8 @@ class LndListener:
                         else:
                             retry_secs = 1
                             self.set_healthy(True)
-                            self._event_callback(json_response)
+                            with self._mutex:
+                                self._event_callback(self._logger, json_response)
                             self._logger.debug(f"Got streamed from LND: {raw_response}")
                 except ChunkedEncodingError:
                     self._logger.warning("LND ChunkedEncodingError closed subscription")

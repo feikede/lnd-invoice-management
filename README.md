@@ -60,9 +60,27 @@ with POST body like
     "callback_uri": "http://localhost:3246", 
     "remittance_info": "hallo 2323", 
     "magic_code": "6545", 
-    "secret": "not_to_know"
+    "secret": "not_to_know",
+    "expiry": 86400
 }
 ```
+
+```expiry``` is optional, default is 86400, it's the invoice's expiration time in seconds.
+
+On success, you get a 200, OK response like
+
+```json
+{
+  "add_index": "897",
+  "payment_request": "lnbc60n....pd"
+}
+```
+
+Where add_index is the invoice index of lnd and payment_request is the bech32
+payment request you should present your customer.
+
+Invoices are stored in the SQLite DB until expiry time or until they're settled.
+If you want to use this for high traffic, use another DB system and connection pooling.
 
 # 'Invoice created' notification
 

@@ -64,7 +64,7 @@ with POST body like
 }
 ```
 
-# Invoice created notification
+# 'Invoice created' notification
 
 This is sent to your callback_uri when the invoice is created by lnd. Show the 'lnd_invoice_data.payment_request' to
 your payee (as QR Code or whatever). The data in lnd_invoice_data may change with different lnd releases. May check docs
@@ -89,7 +89,7 @@ Content-Length: 1350
 }
 ```
 
-# Invoice settled notification
+# 'Invoice settled' notification
 
 This is sent to your callback_uri when the invoice is paid. The data in lnd_invoice_data may change with different lnd
 releases. May check docs here: https://lightning.engineering/api-docs/api/lnd/lightning/subscribe-invoices/index.html

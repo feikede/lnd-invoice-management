@@ -151,6 +151,14 @@ if __name__ == '__main__':
     CORS(app)
 
 
+    @app.route(f"/{API_VERSION}/state", methods=["GET"])
+    def get_state():
+        state = lnd_listener.get_healthy()
+        if state:
+            return {}, 204
+        return {"status": "LND connection not ok"}, 503
+
+
     @app.route(f"/{API_VERSION}/invoice", methods=["POST"])
     def create_invoice():
         expiry = 86400

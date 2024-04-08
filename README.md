@@ -54,14 +54,14 @@ POST http://localhost:8080/v1/invoice
 
 with POST body like
 
-```
+```json
 {
-    "amount_msat": 6000, 
-    "callback_uri": "http://localhost:3246", 
-    "remittance_info": "hallo 2323", 
-    "magic_code": "6545", 
-    "secret": "not_to_know",
-    "expiry": 86400
+  "amount_msat": 6000,
+  "callback_uri": "http://localhost:3246",
+  "remittance_info": "hallo 2323",
+  "magic_code": "6545",
+  "secret": "not_to_know",
+  "expiry": 86400
 }
 ```
 
@@ -110,7 +110,7 @@ Content-Length: 1350
 # 'Invoice settled' notification
 
 This is sent to your callback_uri when the invoice is paid. The data in lnd_invoice_data may change with different lnd
-releases. May check docs here: https://lightning.engineering/api-docs/api/lnd/lightning/subscribe-invoices/index.html
+releases. Check docs here: https://lightning.engineering/api-docs/api/lnd/lightning/subscribe-invoices/index.html
 
 ```
 POST / HTTP/1.1

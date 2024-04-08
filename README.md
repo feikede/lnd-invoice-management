@@ -14,6 +14,37 @@ attention from your application's core functions. Enter our service: designed to
 it offers a user-friendly interface reminiscent of PayPal, eliminating the need for constant streaming connections and
 allowing you to focus on your app's essential tasks."
 
+# .env file for lnd-invoice-management
+
+There's an example in .env.example. Copy it to your env and adjust it to your needs.
+The macaroon needs at least invoices:write invoices:read permissions.
+Bake it like ```lncli bakemacaroon invoices:write invoices:read```. If your lnd
+sits behind tor, you'll find your onion address in ```/var/lib/tor/lnd/hostname```.
+If you need a tor proxy on your machine, I recommend ```peterdavehello/tor-socks-proxy```.
+
+```shell
+# the port where this server should listen at
+SERVER_PORT="8080"
+
+# if you need a tor proxy, set it here
+SOCKS5H_PROXY=
+
+# the clearnet or tor address of your LND Rest socket
+LND_RESTADDR="https://lnd.example.com:1234"
+
+# the macaroon to use for reading and writing invoices
+INVOICE_MACAROON="020xxxx3"
+
+# secret code the caller needs to know
+ENDPOINT_SECRET="not_to_know"
+
+# a TLS Cert to use with your lnd or False if you want to skip TLS auth
+TLS_VERIFY="./tls.cert"
+
+# the SQlite DB file, may use in-mem storage or /tmp - depending on your quality requirements
+SQ3_DATABASE="./data.db"
+```
+
 # Create invoice request
 
 ```
@@ -35,7 +66,8 @@ with POST body like
 # Invoice created notification
 
 This is sent to your callback_uri when the invoice is created by lnd. Show the 'lnd_invoice_data.payment_request' to
-your payee (as QR Code or whatever).
+your payee (as QR Code or whatever). The data in lnd_invoice_data may change with different lnd releases. May check docs
+here: https://lightning.engineering/api-docs/api/lnd/lightning/subscribe-invoices/index.html
 
 ```
 POST / HTTP/1.1
@@ -58,7 +90,8 @@ Content-Length: 1350
 
 # Invoice settled notification
 
-This is sent to your callback_uri when the invoice is paid.
+This is sent to your callback_uri when the invoice is paid. The data in lnd_invoice_data may change with different lnd
+releases. May check docs here: https://lightning.engineering/api-docs/api/lnd/lightning/subscribe-invoices/index.html
 
 ```
 POST / HTTP/1.1

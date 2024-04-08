@@ -16,8 +16,6 @@ class LndListener:
     SOCKS5H_PROXY = os.environ.get("SOCKS5H_PROXY", "")
     LND_RESTADDR = os.environ.get("LND_RESTADDR", "https://your.lnd-server.org")
     INVOICE_MACAROON = os.environ.get("INVOICE_MACAROON", "xxxxxxxxx-xxxx-xxxx")
-    DYNIP_SECRET = os.environ.get("DYNIP_SECRET", "")  # empty means function deactivated
-    DYNIP_PORT = os.environ.get("DYNIP_PORT", "8080")
     TLS_VERIFY = os.environ.get("TLS_VERIFY", "./tls.cert")
 
     def __init__(self, mutex: threading.Lock, logger: logging.Logger, event_callback: Callable[[Any], None]):

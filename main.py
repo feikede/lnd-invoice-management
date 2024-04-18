@@ -81,7 +81,6 @@ def send_notification(logger: logging.Logger, callback_uri: str, data: Any) -> b
             return False
     if response.status_code != 200:
         logger.error("No 200 from callback URI: ")
-        logger.error(response.json())
         logger.error(response.headers)
         return False
     return True
@@ -112,7 +111,8 @@ def lnd_response(logger: logging.Logger, response: Any) -> None:
         'amount_msat': amount_msat,
         'magic_code': magic_code,
         'timestamp': timestamp,
-        'lnd_invoice_data': str(result)
+        'settled': settled,
+        'lnd_invoice_data': result
     }
     send_notification(logger, callback_uri, data)
     if settled:
@@ -177,6 +177,8 @@ if __name__ == '__main__':
             return "Missing or wrong auth-secret", 401
         if not check_for_valid_url(callback_uri):
             return "Invalid callback_uri", 400
+        if len(remittance_info) > 600:
+            return "remittance_info can't be longer then 600 bytes", 400
         app_logger.debug(
             f"Got invoice request: remittance_info={remittance_info}, amount_msat={amount_msat}, "
             f"callback_uri={callback_uri}, magic_code={magic_code}")

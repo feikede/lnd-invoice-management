@@ -65,7 +65,8 @@ with POST body like
 }
 ```
 
-```expiry``` is optional, default is 86400, it's the invoice's expiration time in seconds.
+```expiry``` is optional, default is 86400, it's the invoice's expiration time in seconds. remittance_info can be up to
+600 bytes long.
 
 On success, you get a 200, OK response like
 
@@ -102,6 +103,7 @@ Content-Length: 1350
   "remittance_info": "hallo 2323",
   "amount_msat": 6000,
   "magic_code": "6545",
+  "settled": false,
   "timestamp": 1712506538,
   "lnd_invoice_data": "{'memo': '', 'r_preimage': 'Sxxxxxxxxxs=', 'r_hash': 'GUxxxxxxxxx8o=', 'value': '6', 'value_msat': '6000', 'settled': False, 'creation_date': '1712506538', 'settle_date': '0', 'payment_request': 'lnbc60nxxxxxxxxxxxxxxxxxxxmwvq', 'description_hash': 'mo2xxxxxxxxxU=', 'expiry': '86400', 'fallback_addr': '', 'cltv_expiry': '80', 'route_hints': [], 'private': False, 'add_index': '883', 'settle_index': '0', 'amt_paid': '0', 'amt_paid_sat': '0', 'amt_paid_msat': '0', 'state': 'OPEN', 'htlcs': [], 'features': {'9': {'name': 'tlv-onion', 'is_required': False, 'is_known': True}, '14': {'name': 'payment-addr', 'is_required': True, 'is_known': True}, '17': {'name': 'multi-path-payments', 'is_required': False, 'is_known': True}}, 'is_keysend': False, 'payment_addr': 'BTxxxxxxxxxQ=', 'is_amp': False, 'amp_invoice_state': {}}"
 }
@@ -126,6 +128,7 @@ Content-Length: 1637
   "remittance_info": "hallo 2323",
   "amount_msat": 6000,
   "magic_code": "6545",
+  "settled": true,
   "timestamp": 1712506538,
   "lnd_invoice_data": "{'memo': '', 'r_preimage': 'S3+apxxxxxxxxxAcs=', 'r_hash': 'GUxxxxxxxxx48o=', 'value': '6', 'value_msat': '6000', 'settled': True, 'creation_date': '1712506538', 'settle_date': '1712506581', 'payment_request': 'lnbc60xxxxxxxxxzsqzxmwvq', 'description_hash': 'mo2ZU9xxxxxxxxxekuDU=', 'expiry': '86400', 'fallback_addr': '', 'cltv_expiry': '80', 'route_hints': [], 'private': False, 'add_index': '883', 'settle_index': '353', 'amt_paid': '6000', 'amt_paid_sat': '6', 'amt_paid_msat': '6000', 'state': 'SETTLED', 'htlcs': [{'chan_id': '7xxxxxxxxxx', 'htlc_index': '418', 'amt_msat': '6000', 'accept_height': 838157, 'accept_time': '1712506581', 'resolve_time': '1712506581', 'expiry_height': 838240, 'state': 'SETTLED', 'custom_records': {}, 'mpp_total_amt_msat': '6000', 'amp': None}], 'features': {'9': {'name': 'tlv-onion', 'is_required': False, 'is_known': True}, '14': {'name': 'payment-addr', 'is_required': True, 'is_known': True}, '17': {'name': 'multi-path-payments', 'is_required': False, 'is_known': True}}, 'is_keysend': False, 'payment_addr': 'BTxxxxxxxxxQ=', 'is_amp': False, 'amp_invoice_state': {}}"
 }

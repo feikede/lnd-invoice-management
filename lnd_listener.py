@@ -55,6 +55,7 @@ class LndListener:
             headers = {"Content-Type": "application/json; charset=utf-8",
                        "Grpc-Metadata-macaroon": self.INVOICE_MACAROON}
             data = {"value_msat": amount_msat,
+                    "memo": description,
                     "description_hash": description_hashed.decode("UTF-8"),
                     "expiry": expiry}
             json_data = json.dumps(data)

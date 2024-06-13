@@ -55,7 +55,7 @@ def cleanup_expired_rows_thread(logger: logging.Logger):
     while True:
         time.sleep(60 * 5)
         with mutex:
-            logger.debug("removing expired rows...")
+            # logger.debug("removing expired rows...")
             now = int(time.time())
             connection = sqlite3.connect(SQ3_DATABASE)
             cursor = connection.cursor()
@@ -133,6 +133,7 @@ if __name__ == '__main__':
     # mutex
     mutex = threading.Lock()
     # database
+    logging.info(f"Checking DB at {SQ3_DATABASE}")
     with mutex:
         sq3_connection = sqlite3.connect(SQ3_DATABASE)
         sq3_cursor = sq3_connection.cursor()

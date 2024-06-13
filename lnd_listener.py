@@ -94,9 +94,9 @@ class LndListener:
                         else:
                             retry_secs = 1
                             self.set_healthy(True)
+                            self._logger.debug(f"Got streamed from LND: {raw_response}")
                             with self._mutex:
                                 self._event_callback(self._logger, json_response)
-                            self._logger.debug(f"Got streamed from LND: {raw_response}")
                 except ChunkedEncodingError:
                     self._logger.warning("LND ChunkedEncodingError closed subscription")
             except requests.exceptions.InvalidSchema:

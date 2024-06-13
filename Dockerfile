@@ -1,3 +1,4 @@
+# build like: docker build . -t invoicemgmt-server:latest -t invoicemgmt-server:1.1
 ARG PYTHON_VERSION=3.12.2
 FROM python:${PYTHON_VERSION}-slim as base
 
@@ -40,9 +41,6 @@ USER appuser
 
 # Copy the source code into the container.
 COPY . .
-
-# Expose the port that the application listens on.
-EXPOSE 8000
 
 # Run the application.
 CMD python3 main.py

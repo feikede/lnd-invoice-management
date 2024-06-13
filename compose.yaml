@@ -2,6 +2,8 @@ services:
   server:
     build:
       context: .
+    logging:
+      driver: local
     restart: always
     env_file:
       - .env
